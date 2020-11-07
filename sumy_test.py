@@ -16,7 +16,7 @@ SENTENCES_COUNT = 2
 # https://www.cnn.com/2020/11/07/health/us-coronavirus-saturday/index.html
 # https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html
 # https://theintercept.com/2020/11/06/fox-news-election-trump-murdoch/
-# 
+# https://www.foxnews.com/politics/pa-battlegrounds-biden-trump-legal-fight
 
 
 if __name__ == "__main__":
