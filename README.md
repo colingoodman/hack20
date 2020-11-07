@@ -1,4 +1,4 @@
 # hack20
 uhhuhuhuh
 
-https://github.com/dsynkov/smmryAPI
+https://github.com/miso-belica/sumy
