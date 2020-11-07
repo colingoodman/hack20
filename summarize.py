@@ -1,0 +1,59 @@
+from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals
+
+from sumy.parsers.html import HtmlParser
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.nlp.stemmers import Stemmer
+from sumy.utils import get_stop_words
+
+import json
+import sys
+
+LANGUAGE = "english"
+SENTENCES_COUNT = 2
+
+url = "https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html"
+
+# https://www.cnn.com/2020/11/07/health/us-coronavirus-saturday/index.html
+# https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html
+# https://theintercept.com/2020/11/06/fox-news-election-trump-murdoch/
+# https://www.foxnews.com/politics/pa-battlegrounds-biden-trump-legal-fight
+
+# [python file] [arg1: url] [arg2: article title] [arg3: article date]
+
+if __name__ == "__main__":
+	if len(sys.argv) != 4:
+		raise Exception('woops!')
+	else:
+		url = sys.argv[1]
+		title = sys.argv[2]
+		date = sys.argv[3]
+		
+	parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+    # or for plain text files
+    # parser = PlaintextParser.from_file("document.txt", Tokenizer(LANGUAGE))
+	stemmer = Stemmer(LANGUAGE)
+    
+	summarizer = Summarizer(stemmer)
+	summarizer.stop_words = get_stop_words(LANGUAGE)
+	summarized = summarizer(parser.document, SENTENCES_COUNT)
+	sentence_list = []
+    
+	for sentence in summarizer(parser.document, SENTENCES_COUNT):
+		sentence_list.append(sentence)
+        
+	x = {
+		"title" : "article title",
+		"url" : url,
+		"first" : str(sentence_list[0]),
+		"second" : str(sentence_list[1])
+    } 
+    
+	json_obj = json.dumps(x)
+    
+	print(json.loads(json_obj))
+	with open('file.json','w') as outfile:
+		json.dump(x, outfile)
+    
