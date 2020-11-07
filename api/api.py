@@ -1,17 +1,22 @@
 import flask
 from flask import request, jsonify
 
-# from newsapi import NewsApiClient
+import json
 
-# Init
-# newsapi = NewsApiClient(api_key='1224ab37b05c4c80a1f588ee586b15d7')
+from sumy.parsers.html import HtmlParser
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.nlp.stemmers import Stemmer
+from sumy.utils import get_stop_words
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-# @app.route("/")
-# def homepage():
-#     return render_template("page.html", title="HOME PAGE")
+# Summarize API
+url = "https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html"
+LANGUAGE = "english"
+SENTENCES_COUNT = 2
 
 # Create some test data for our catalog in the form of a list of dictionaries.
 books = [
@@ -32,16 +37,6 @@ books = [
      'published': '1975'}
 ]
 
-# articles = []
-
-# all_articles = newsapi.get_everything(q='election',
-#                                       sources='fox-news',
-#                                       domains='foxnews.com',
-#                                       from_param='2020-11-06T00:00:00',
-#                                       to='2020-11-07T00:00:00',
-#                                       language='en',
-#                                       sort_by='relevancy',
-#                                       page=1)
 
 @app.route('/', methods=['GET'])
 def home():
@@ -75,9 +70,29 @@ def api_id():
     # Python dictionaries to the JSON format.
     return jsonify(results)
 
-# @app.route('/api/v1/news/all', methods=['GET'])
-# def news_all():
-#     return jsonify(all_articles)
+@app.route('/api/v1/summary/all', methods=['GET'])
+def news_all():
+    parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+    stemmer = Stemmer(LANGUAGE)
+    
+    summarizer = Summarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
+
+    summarized = summarizer(parser.document, SENTENCES_COUNT)
+
+    sentence_list = []
+
+    for sentence in summarizer(parser.document, SENTENCES_COUNT):
+        sentence_list.append(sentence)
+
+    x = {
+    	"title" : "article title",
+    	"first" : str(sentence_list[0]),
+    	"second" : str(sentence_list[1])
+    }    
+
+    return jsonify(x)
+
 
 @app.after_request
 def apply_caching(response):
@@ -86,5 +101,5 @@ def apply_caching(response):
     return response
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True)
-    #app.run(debug=True)
+    #app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(debug=True)
