@@ -13,6 +13,11 @@ import json
 LANGUAGE = "english"
 SENTENCES_COUNT = 2
 
+# https://www.cnn.com/2020/11/07/health/us-coronavirus-saturday/index.html
+# https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html
+# https://theintercept.com/2020/11/06/fox-news-election-trump-murdoch/
+# 
+
 
 if __name__ == "__main__":
     url = "https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html"
