@@ -17,7 +17,8 @@
     "date-fns": "^2.16.1",
     "postcss": "^8.1.6",
     "tailwindcss": "^1.9.6",
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "vue-feather-icons": "^5.1.0"
   },
   "devDependencies": {
     "@vue/cli-service": "^4.5.8",
