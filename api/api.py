@@ -127,7 +127,7 @@ def get_news_articles():
     json_articles = all_articles['articles']
     summarized_articles = create_cycle_json(json_articles)
  
-    return summarized_articles
+    return json.dumps(summarized_articles)
 
 def input_article_parse(article_list):
     # list of json objects
@@ -193,7 +193,8 @@ def summarize_article(article):
 
     return summary
 
-#print(get_news_articles())
+
+#print(type(get_news_articles()))
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=8080, debug=True)
