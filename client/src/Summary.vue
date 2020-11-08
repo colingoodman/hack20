@@ -7,12 +7,12 @@
       <li class="mb-2">{{ summary.first }}</li>
       <li>{{ summary.second }}</li>
     </ul>
-    <span v-if="summary.source" class="text-gray-700">from {{ summary.source }}</span>
-    </div>
-    <div>
-      <button class="p-2 text-gray-600 rounded hover:bg-white hover:text-gray-800">
-      <a title="Open Article in New Tab" target="_blank" :href="summary.url"><external-link-icon /></a>
-      </button>
+    <p class="mt-2 text-gray-700 py-auto">
+      <a class="my-auto py-auto align-middle hover:text-gray-800" title="Open Article in New Tab" target="_blank" :href="summary.url">
+        The original article
+        <span v-if="summary.source">from {{ summary.source }}</span>
+      </a>
+    </p>
     </div>
   </div>
 </template>
