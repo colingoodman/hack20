@@ -3,6 +3,9 @@ from flask import request, jsonify
 
 import json
 
+import nltk
+nltk.data.path.append('/whatever')
+
 from sumy.parsers.html import HtmlParser
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
@@ -102,4 +105,4 @@ def apply_caching(response):
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=8080, debug=True)
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)

@@ -12,6 +12,7 @@ joblib==0.17.0
 lxml==4.6.1
 MarkupSafe==1.1.1
 nltk==3.5
+numpy==1.16.6
 pycountry==20.7.3
 regex==2020.10.28
 requests==2.24.0
