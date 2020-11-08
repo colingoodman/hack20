@@ -1,5 +1,7 @@
 from newsapi.newsapi_client import NewsApiClient
 import requests
+import pprint
+from datetime import datetime, timedelta, timezone
 
 import flask
 from flask import request, jsonify
@@ -18,6 +20,9 @@ from sumy.utils import get_stop_words
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+
+timerightnow = datetime.now()
+timeonedayago = datetime.today() - timedelta(hours=24, minutes=0)
 
 # Summarize API
 url = "https://www.nytimes.com/2020/11/06/opinion/sunday/joe-biden-president-policy.html"
@@ -99,6 +104,9 @@ def news_all():
 
     return jsonify(x)
 
+@app.route('/api/v1/news', methods=['GET'])
+def return_articles():
+    return get_news_articles() # should be a list of jsons
 
 @app.after_request
 def apply_caching(response):
@@ -108,8 +116,18 @@ def apply_caching(response):
     
 def get_news_articles():
     newsapi = NewsApiClient(api_key='1224ab37b05c4c80a1f588ee586b15d7')
-    
-    return 0
+    all_articles = newsapi.get_everything(q='election OR biden OR trump OR pandemic OR virus OR stocks OR economy OR politics OR usa OR harris OR pence OR vote',
+                                      from_param=timeonedayago,
+                                      to=timerightnow,
+                                      language='en',
+                                      sort_by='relevancy',
+                                      page_size=5)
+                                      
+
+    json_articles = all_articles['articles']
+    summarized_articles = create_cycle_json(json_articles)
+ 
+    return summarized_articles
 
 def input_article_parse(article_list):
     # list of json objects
