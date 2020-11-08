@@ -131,7 +131,10 @@ def get_news_articles():
 
 def input_article_parse(article_list):
     # list of json objects
-    dictionary_article_list = json.loads(article_list)
+    dictionary_article_list = []
+    for json_item in article_list:
+        dictionary_article_list.append(json_item)
+     #= json.loads(article_list)
     parsed_articles = []
     
     for article in dictionary_article_list:
@@ -146,6 +149,7 @@ def input_article_parse(article_list):
 
 # returns a single json object for a set of articles
 def create_cycle_json(articles):
+    now = datetime.now()
     cycle_obj = {}
     cycle_obj['date'] = str(now)
     summaries = []
@@ -188,6 +192,8 @@ def summarize_article(article):
     }
 
     return summary
+
+#print(get_news_articles())
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=8080, debug=True)
