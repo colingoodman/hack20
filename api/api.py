@@ -1,3 +1,6 @@
+from newsapi.newsapi_client import NewsApiClient
+import requests
+
 import flask
 from flask import request, jsonify
 
@@ -102,6 +105,71 @@ def apply_caching(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
+    
+def get_news_articles():
+    newsapi = NewsApiClient(api_key='1224ab37b05c4c80a1f588ee586b15d7')
+    
+    return 0
+
+def input_article_parse(article_list):
+    # list of json objects
+    dictionary_article_list = json.loads(article_list)
+    parsed_articles = []
+    
+    for article in dictionary_article_list:
+        temp_dict = {}
+        temp_dict['url'] = article["url"]
+        temp_dict['source'] = article["source"]["name"]
+        temp_dict['title'] = article["title"]
+        
+        parsed_articles.append(temp_dict)
+
+    return parsed_articles
+
+# returns a single json object for a set of articles
+def create_cycle_json(articles):
+    cycle_obj = {}
+    cycle_obj['date'] = str(now)
+    summaries = []
+    
+    parsed_articles = input_article_parse(articles)
+    
+    for article in parsed_articles:
+        summarized_article = summarize_article(article)
+        summaries.append(summarized_article)
+        
+    cycle_obj['summaries'] = summaries
+    
+    return cycle_obj
+    
+# need a method for appending new cycles to json list
+    
+# returns a dictionary object for 1 article summary
+def summarize_article(article):
+    # an article summary should be a dictionary object
+    url = article['url']
+    title = article['title']
+    source = article['source']
+    parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+    stemmer = Stemmer(LANGUAGE)
+    
+    summarizer = Summarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
+    summarized = summarizer(parser.document, SENTENCES_COUNT)
+    sentence_list = []
+    
+    for sentence in summarizer(parser.document, SENTENCES_COUNT):
+        sentence_list.append(sentence)
+        
+    summary = { # creates a dictionary object
+        "title" : title,
+        "url" : url,
+        "source" : source,
+        "first" : str(sentence_list[0]),
+        "second" : str(sentence_list[1])
+    }
+
+    return summary
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=8080, debug=True)
