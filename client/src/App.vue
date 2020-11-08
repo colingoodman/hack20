@@ -3,10 +3,10 @@
     id="app"
     class="bg-white justify-center max-h-screen overflow-y-auto"
   >
-  <marquee direction="right">QUIK NEWS</marquee>
     <div class="text-gray-800 p-1 max-w-4xl mx-auto">
-      <div class="p-2">
-        <h1 class="text-4xl">Quik News</h1>
+      <div class="text-4xl flex justify-between">
+        <h1 class="inline">Quik News</h1>
+        <button class="text-gray-600 rounded hover:bg-white hover:text-gray-800"><refresh-cw-icon /></button>
       </div>
       <Cycle class="mb-16" v-for="cycle in cycles" :cycle="cycle" :key="cycle.date" />
       <button @click="getSummaries">GET</button>
@@ -15,12 +15,13 @@
 </template>
 
 <script>
-import cycles from '../../file.json'
+import cycles from '../../example.json'
 import Cycle from './Cycle.vue'
+import { RefreshCwIcon } from 'vue-feather-icons'
 
 export default {
   name: 'App',
-  components: { Cycle },
+  components: { Cycle, RefreshCwIcon },
   data() {
     return {
       cycles: cycles
@@ -49,4 +50,9 @@ export default {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body
+{
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
 </style>
