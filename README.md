@@ -7,3 +7,5 @@ The front end was built with Node. The back end was built in Python. There was n
 Libraries we used:
 https://github.com/miso-belica/sumy
 https://newsapi.org/docs/client-libraries/python
+
+See the Devpost submission for more information and screenshots: https://devpost.com/software/in-a-nutshell
