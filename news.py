@@ -11,7 +11,6 @@ timeonedayago = datetime.today() - timedelta(hours=24, minutes=0)
 print(timeonedayago.strftime('%Y-%m-%dT%H:%M:%S'))
 
 # Init
-newsapi = NewsApiClient(api_key='59cc7898a9774af8bce9ea1b0ebb6e50')
 
 all_articles = newsapi.get_everything(q='election OR biden OR trump OR pandemic OR virus OR stocks OR economy OR politics OR usa OR harris OR pence OR vote',
                                       from_param=timeonedayago,

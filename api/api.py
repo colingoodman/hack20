@@ -115,7 +115,6 @@ def apply_caching(response):
     return response
     
 def get_news_articles():
-    newsapi = NewsApiClient(api_key='1224ab37b05c4c80a1f588ee586b15d7')
     all_articles = newsapi.get_everything(q='election OR biden OR trump OR pandemic OR virus OR stocks OR economy OR politics OR usa OR harris OR pence OR vote',
                                       from_param=timeonedayago,
                                       to=timerightnow,
