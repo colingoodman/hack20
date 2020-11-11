@@ -1,4 +1,4 @@
-# hack20
+# In A Nutshell
 
 This was a project for the 2020 K-State Hackathon. It is a website that fetches trending news stories and uses natural language processing to summarize them. The goal was to create a quick and easy way to stay informed amid the chaos of the 24 hour news cycle. 
 
